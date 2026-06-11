@@ -1,0 +1,68 @@
+name: iOS Unsigned IPA
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-unsigned-ipa:
+    name: Build unsigned IPA
+    runs-on: macos-15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: |
+          sudo xcode-select -s /Applications/Xcode.app
+          xcodebuild -version
+
+      - name: Install XcodeGen
+        run: brew install xcodegen
+
+      - name: Generate Xcode project
+        working-directory: apps/ios
+        run: xcodegen generate
+
+      - name: Build unsigned iPhoneOS app
+        working-directory: apps/ios
+        run: |
+          xcodebuild build \
+            -project CarLink.xcodeproj \
+            -scheme CarLink \
+            -configuration Release \
+            -sdk iphoneos \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath "$PWD/DerivedData" \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            AD_HOC_CODE_SIGNING_ALLOWED=NO \
+            DEVELOPMENT_TEAM=""
+
+      - name: Package unsigned IPA
+        working-directory: apps/ios
+        run: |
+          APP_PATH="$PWD/DerivedData/Build/Products/Release-iphoneos/CarLink.app"
+          IPA_DIR="$PWD/export"
+          IPA_PATH="$IPA_DIR/CarLink-unsigned.ipa"
+
+          test -d "$APP_PATH"
+          rm -rf "$IPA_DIR"
+          mkdir -p "$IPA_DIR/Payload"
+          ditto "$APP_PATH" "$IPA_DIR/Payload/CarLink.app"
+          (cd "$IPA_DIR" && /usr/bin/zip -qry "$IPA_PATH" Payload)
+          /usr/bin/unzip -t "$IPA_PATH"
+
+      - name: Upload unsigned IPA
+        uses: actions/upload-artifact@v4
+        with:
+          name: CarLink-unsigned-ipa
+          path: apps/ios/export/CarLink-unsigned.ipa
+          if-no-files-found: error

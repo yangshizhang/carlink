@@ -1,0 +1,21 @@
+{
+  "name": "carlink",
+  "version": "0.1.0",
+  "private": true,
+  "description": "CarLink self-owned phone-to-PC in-car companion protocol and receiver.",
+  "workspaces": [
+    "apps/windows",
+    "packages/protocol"
+  ],
+  "scripts": {
+    "dev:windows": "npm --workspace @carlink/windows run dev",
+    "build": "npm run build:protocol && npm run build:windows",
+    "build:protocol": "npm --workspace @carlink/protocol run build",
+    "build:windows": "npm --workspace @carlink/windows run build",
+    "dist:windows": "npm --workspace @carlink/windows run dist",
+    "typecheck": "npm --workspaces --if-present run typecheck"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

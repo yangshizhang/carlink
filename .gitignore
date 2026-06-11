@@ -1,0 +1,15 @@
+node_modules/
+dist/
+out/
+build/
+.DS_Store
+*.log
+*.tsbuildinfo
+.env
+.env.*
+!.env.example
+
+apps/ios/CarLink.xcodeproj/
+apps/ios/DerivedData/
+apps/ios/*.xcarchive/
+apps/ios/export/
