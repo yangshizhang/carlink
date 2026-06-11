@@ -8,6 +8,7 @@ build/
 .env
 .env.*
 !.env.example
+.tmp-action-logs/
 
 apps/ios/CarLink.xcodeproj/
 apps/ios/DerivedData/

@@ -20,4 +20,5 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: com.yangshizhang.carlink
         PRODUCT_NAME: CarLink
         INFOPLIST_FILE: Sources/CarLink/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: ""
         CODE_SIGN_STYLE: Automatic
