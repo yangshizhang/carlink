@@ -54,6 +54,11 @@ jobs:
           IPA_PATH="$IPA_DIR/CarLink-unsigned.ipa"
 
           test -d "$APP_PATH"
+          EXECUTABLE_NAME=$(/usr/libexec/PlistBuddy -c "Print :CFBundleExecutable" "$APP_PATH/Info.plist")
+          test -n "$EXECUTABLE_NAME"
+          test -f "$APP_PATH/$EXECUTABLE_NAME"
+          test -x "$APP_PATH/$EXECUTABLE_NAME"
+
           rm -rf "$IPA_DIR"
           mkdir -p "$IPA_DIR/Payload"
           ditto "$APP_PATH" "$IPA_DIR/Payload/CarLink.app"
