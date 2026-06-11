@@ -111,7 +111,7 @@ private struct TopStatusBar: View {
                     .font(.system(size: 30, weight: .bold))
                 Text(model.connectionStatus)
                     .font(.subheadline.weight(.semibold))
-                    .foregroundStyle(model.activeSessionId == nil ? .secondary : .green)
+                    .foregroundStyle(model.activeSessionId == nil ? Color.secondary : Color.green)
             }
 
             Spacer()
