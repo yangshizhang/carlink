@@ -3,6 +3,28 @@ import UIKit
 
 let carLinkProtocolVersion = 1
 
+struct PairingAdvert: Codable {
+    let protocolName: String
+    let version: Int
+    let host: String
+    let port: Int
+    let pin: String
+    let receiverId: String
+    let receiverName: String
+    let expiresAt: String
+
+    enum CodingKeys: String, CodingKey {
+        case protocolName = "protocol"
+        case version
+        case host
+        case port
+        case pin
+        case receiverId
+        case receiverName
+        case expiresAt
+    }
+}
+
 struct Envelope<Payload: Codable>: Codable {
     let id: String
     let type: String

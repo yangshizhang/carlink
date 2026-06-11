@@ -28,6 +28,13 @@
   </array>
   <key>NSLocalNetworkUsageDescription</key>
   <string>CarLink discovers and connects to your Windows receiver on the local network.</string>
+  <key>NSCameraUsageDescription</key>
+  <string>CarLink scans the receiver QR code to pair with your Windows display.</string>
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsLocalNetworking</key>
+    <true/>
+  </dict>
   <key>NSBonjourServices</key>
   <array>
     <string>_carlink._tcp</string>

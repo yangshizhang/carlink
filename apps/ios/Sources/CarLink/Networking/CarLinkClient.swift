@@ -3,7 +3,7 @@ import Foundation
 final class CarLinkClient {
     enum Event {
         case connected
-        case paired
+        case paired(String)
         case rejected(String)
         case command(String)
         case closed
@@ -81,8 +81,9 @@ final class CarLinkClient {
             return
         }
 
-        if base.type == "pairing.accepted" {
-            callback?(.paired)
+        if base.type == "pairing.accepted",
+           let accepted = try? decoder.decode(Envelope<PairingAccepted>.self, from: data) {
+            callback?(.paired(accepted.payload.sessionId))
             return
         }
 
